@@ -1,5 +1,5 @@
-### Leviathan Wakes (An RPG game based on the book)
+### Leviathan Wakes API
 
-Set in the 23rd century, where the solar system has been colonized, Leviathan Wakes follows the adventures of detective Joe Miller and former navy officer Jim Holden. 
+This API handles user authentication as well as data from a user's saved games.
 
 
