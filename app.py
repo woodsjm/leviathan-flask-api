@@ -1,7 +1,8 @@
-from flask import Flask, g, request, jsonify
+from flask import Flask, g, request, jsonify, session
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, logout_user, current_user
 from playhouse.shortcuts import model_to_dict
+from flask_cors import CORS
 
 import models
 
@@ -11,9 +12,16 @@ PORT = 8000
 
 
 login_manager = LoginManager()
+@login_manager.user_loader
+def load_user(user_id):
+    return None
+
 app = Flask(__name__, static_url_path="", static_folder="static")
 app.secret_key = 'RLAKJDRANDOM STRING'
 login_manager.init_app(app)
+
+
+CORS(app, origins=['http://localhost:3000'], supports_credentials=True)
 
 ###########
 # Routes #
@@ -35,6 +43,13 @@ def login():
 
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
+
+
+@app.route('/logout', methods=["GET"])
+def logout():
+  print(session)
+  session.pop('email', None)
+  return jsonify(data={}, status={"code": 200, "message": "User successfully logged out"}) 
 
 
 @app.route('/register', methods=["POST"])
