@@ -21,7 +21,7 @@ app.secret_key = 'RLAKJDRANDOM STRING'
 login_manager.init_app(app)
 
 
-CORS(app, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(app, origins=['http://localhost:3000', "https://leviathan-react-client.herokuapp.com"], supports_credentials=True)
 
 ###########
 # Routes #
@@ -90,6 +90,9 @@ def after_request(response):
 def index():
     return 'SERVER IS WORKING'
 
+if 'ON_HEROKU' in os.environ:
+  print('hitting')
+  models.initialize()
 
 if __name__ == '__main__':
   models.initialize()

@@ -6,7 +6,10 @@ import os
 
 from playhouse.db_url import connect
 
-DATABASE = SqliteDatabase('leviathan.sqlite')
+if os.environ.get('HEROKU_ON'):
+    DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+    DATABASE = SqliteDatabase('leviathan.sqlite')
 
 #User Model
 class User(UserMixin, Model):
