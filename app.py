@@ -25,6 +25,9 @@ login_manager.init_app(app)
 
 CORS(app, origins=['http://localhost:3000', "https://leviathan-wakes-react.herokuapp.com"], supports_credentials=True)
 
+
+logging.getLogger('flask_cors').level = logging.DEBUG
+
 ###########
 # Routes #
 ###########
@@ -83,8 +86,8 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
+    # header = response.headers
+    # header['Access-Control-Allow-Origin'] = '*'
     """Close the database connection after each request."""
     g.db.close()
     return response
