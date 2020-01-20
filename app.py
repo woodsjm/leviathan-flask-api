@@ -83,10 +83,11 @@ def before_request():
 
 @app.after_request
 def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
     """Close the database connection after each request."""
     g.db.close()
     return response
-
 
 @app.route('/')
 def index():
