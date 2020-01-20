@@ -4,6 +4,8 @@ from flask_login import LoginManager, login_user, logout_user, current_user
 from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
 
+import logging
+
 import os
 
 import models
