@@ -4,6 +4,8 @@ from flask_login import LoginManager, login_user, logout_user, current_user
 from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
 
+import os
+
 import models
 
 
@@ -21,7 +23,7 @@ app.secret_key = 'RLAKJDRANDOM STRING'
 login_manager.init_app(app)
 
 
-CORS(app, origins=['http://localhost:3000', "https://leviathan-react-client.herokuapp.com"], supports_credentials=True)
+CORS(app, origins=['http://localhost:3000', "https://leviathan-wakes-react.herokuapp.com"], supports_credentials=True)
 
 ###########
 # Routes #
