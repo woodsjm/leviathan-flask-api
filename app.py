@@ -92,6 +92,8 @@ def after_request(response):
     # header = response.headers
     # header['Access-Control-Allow-Origin'] = '*'
     """Close the database connection after each request."""
+    print("Here's the response from the server!!: ", response)
+    g.db = models.DATABASE
     g.db.close()
     return response
 
