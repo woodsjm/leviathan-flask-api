@@ -82,8 +82,8 @@ def register():
 ##################################
 
 @app.before_request
-def before_request(request):
-    print("Here is the request: ", request)
+def before_request():
+    print("Here is the request: ", request.get_json())
     """Connect to the database before each request."""
     g.db = models.DATABASE
     g.db.connect()
