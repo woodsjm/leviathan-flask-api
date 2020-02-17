@@ -70,10 +70,11 @@ def register():
 
   except models.DoesNotExist:
     payload['password'] = generate_password_hash(payload['password']).decode('utf8')
-    user = models.User.create(**payload)
+    user = models.User.create(email=payload['email'], password=payload['password'])
     login_user(user)
     user_dict = model_to_dict(user)
     del user_dict['password']
+
     return jsonify(data=user_dict, status={"code": 201, "message": "Success"})
 
 ##################################
