@@ -26,7 +26,8 @@ login_manager.init_app(app)
 
 CORS(app, origins=
           ['http://localhost:3000', 
-            "https://leviathan-wakes-react.herokuapp.com"], 
+            "https://leviathan-wakes-react.herokuapp.com",
+            "http://leviathan-wakes-react.herokuapp.com"], 
           supports_credentials=True)
 
 logging.getLogger('flask_cors').level = logging.DEBUG
