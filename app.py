@@ -62,6 +62,7 @@ def logout():
 @app.route('/register', methods=["POST"])
 def register():
   payload = request.get_json()
+  print("PAYLOAD: ", payload)
 
   try:
     models.User.get(models.User.email == payload.get('email'))
