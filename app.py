@@ -3,14 +3,13 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, logout_user, current_user
 from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
-from flask_sslify import SSLify
 
 import logging
 import models
 import os
 
 
-DEBUG = False
+DEBUG = True
 PORT = 8000
 
 
@@ -21,7 +20,6 @@ def load_user(user_id):
 
 
 app = Flask(__name__, static_url_path="", static_folder="static")
-sslify = SSLify(app)
 app.secret_key = 'RLAKJDRANDOM STRING'
 login_manager.init_app(app)
 
