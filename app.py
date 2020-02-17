@@ -5,10 +5,8 @@ from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
 
 import logging
-
-import os
-
 import models
+import os
 
 
 DEBUG = True
@@ -20,13 +18,17 @@ login_manager = LoginManager()
 def load_user(user_id):
     return None
 
+
 app = Flask(__name__, static_url_path="", static_folder="static")
 app.secret_key = 'RLAKJDRANDOM STRING'
 login_manager.init_app(app)
 
 
-CORS(app, origins=['http://localhost:3000', "https://leviathan-wakes-react.herokuapp.com", "http://leviathan-wakes-react.herokuapp.com"], supports_credentials=True)
-
+CORS(app, origins=
+          ['http://localhost:3000', 
+            "https://leviathan-wakes-react.herokuapp.com", 
+            "http://leviathan-wakes-react.herokuapp.com"], 
+          supports_credentials=True)
 
 logging.getLogger('flask_cors').level = logging.DEBUG
 
@@ -62,8 +64,7 @@ def logout():
 @app.route('/register', methods=["POST"])
 def register():
   payload = request.get_json()
-  print("PAYLOAD: ", payload)
-
+  
   try:
     models.User.get(models.User.email == payload.get('email'))
     return jsonify(data={}, status={"code": 401, "message": "A user with that name exists"})
@@ -83,29 +84,26 @@ def register():
 
 @app.before_request
 def before_request():
-    print("Here is the request: ", request.get_json())
-    """Connect to the database before each request."""
     g.db = models.DATABASE
     g.db.connect()
 
 
 @app.after_request
 def after_request(response):
-    # header = response.headers
-    # header['Access-Control-Allow-Origin'] = '*'
-    """Close the database connection after each request."""
-    print("Here's the response from the server!!: ", response)
     g.db = models.DATABASE
     g.db.close()
     return response
+
 
 @app.route('/')
 def index():
     return 'SERVER IS WORKING'
 
+
 if 'ON_HEROKU' in os.environ:
   print('hitting')
   models.initialize()
+
 
 if __name__ == '__main__':
   models.initialize()
