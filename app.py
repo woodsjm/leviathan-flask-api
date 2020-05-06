@@ -7,6 +7,7 @@ from flask_cors import CORS
 import logging
 import models
 import os
+import requests
 
 
 DEBUG = True
@@ -77,6 +78,30 @@ def register():
     del user_dict['password']
 
     return jsonify(data=user_dict, status={"code": 201, "message": "Success"})
+
+# Route for cron job request that hits
+# this Heroku server every 15 minutes, every hour except
+# from midnight to 7:00 am
+@app.route('/cronjob')
+def cronjob():
+  data = {
+      'id': 'undefined'
+  }
+  outputs = None
+  try:
+      # Request track from Spinneret that
+      # that will programmatically visit the 
+      # Leviathan-Wakes-React website
+      res = requests.post(
+          'https://api.spinneret.co/v1/invoke?token=f9fb3b00-5437-11ea-b3ec-0242ac110002', 
+          json = data
+      )
+      outputs = res.json()
+  except:
+    return "Cron Job Failed"
+  finally:
+    return "Cron Job Worked"
+
 
 ##################################
 # Connection and Initialization #
