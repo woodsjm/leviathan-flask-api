@@ -28,7 +28,8 @@ login_manager.init_app(app)
 CORS(app, origins=
           ['http://localhost:3000', 
             "https://leviathan-wakes-react.herokuapp.com",
-            "http://leviathan-wakes-react.herokuapp.com"], 
+            "http://leviathan-wakes-react.herokuapp.com",
+            "https://leviathan-wakes.netlify.app"], 
           supports_credentials=True)
 
 logging.getLogger('flask_cors').level = logging.DEBUG
@@ -91,7 +92,7 @@ def cronjob():
   try:
       # Request track from Spinneret that
       # that will programmatically visit the 
-      # Leviathan-Wakes-React website
+      # Leviathan-Wakes-React client
       res = requests.post(
           'https://api.spinneret.co/v1/invoke?token=f9fb3b00-5437-11ea-b3ec-0242ac110002', 
           json = data
@@ -101,6 +102,8 @@ def cronjob():
     return "Cron Job Failed"
   finally:
     return "Cron Job Worked"
+
+import requests
 
 
 ##################################
